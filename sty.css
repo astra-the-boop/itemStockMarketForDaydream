@@ -1,0 +1,10 @@
+body{
+    background-color: black;
+    color: white
+}
+th, td {
+    border: 2px solid white;
+}
+table{
+    margin: auto;
+}
