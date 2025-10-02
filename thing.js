@@ -25,11 +25,16 @@ app.get("/", (req, res) => {
     const body = document.querySelector("body");
     const table = document.querySelector("#table");
 
+    const columns = ["ITEMID", "ITEMNAME", "ITEMDESC", "MINPRICE", "MAXPRICE", "STOCK"];
+
     for (i = 0; i < parsed.length-1; i++) {
         const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.textContent = parsed[i]["ITEMNAME"];
-        tr.appendChild(td);
+
+        for (const col of columns) {
+            const td = document.createElement("td");
+            td.textContent = parsed[i][col] || "";
+            tr.appendChild(td);
+        }
         table.appendChild(tr);
     }
 
