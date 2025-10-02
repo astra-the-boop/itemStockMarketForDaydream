@@ -6,16 +6,25 @@ const app = express();
 
 const port = 3069
 
+
 let parsed = [];
-
 app.set("view engine", "ejs");
+function loadData(){
+    parsed = [];
+    fs.createReadStream("Untitled Spreadsheet.csv").pipe(csv()).on("data", (row)=>{
+        parsed.push(row);
+    }).on("end", () => {
+        console.log(parsed)
+    });
+}
 
-fs.createReadStream("Untitled Spreadsheet.csv").pipe(csv()).on("data", (row)=>{
-    parsed.push(row);
-}).on("end", () => {
-    console.log(parsed)
+loadData();
+setInterval(loadData, 10000);
+
+
+app.get("/data", (req, res) => {
+    res.json(parsed);
 });
-
 
 app.get("/", (req, res) => {
     const html = fs.readFileSync("./public/index.html", "utf8");
@@ -37,13 +46,6 @@ app.get("/", (req, res) => {
         }
         table.appendChild(tr);
     }
-
-
-
-    // const h1 = document.createElement("h1");
-    // h1.textContent = "DOM Manipulation Works";
-    // h1.style.color = "red";
-    // document.body.insertBefore(h1, table);
 
     res.send(dom.serialize());
 })
