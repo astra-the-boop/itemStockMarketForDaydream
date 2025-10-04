@@ -33,34 +33,39 @@ function calcPrice(prevPrice, initStock, prevStock, currentStock) {
 
 function loadData(){
     parsedRaw = [];
-    fs.createReadStream("Untitled Spreadsheet.csv").pipe(csv()).on("data", (row)=>{
-        parsed.push(row);
-    }).on("end", () => {});
-    parsed = [];
-    if(prevStock.length === 0){
+    fs.createReadStream("Untitled Spreadsheet.csv").pipe(csv()).on("data", (row) => {
+        parsedRaw.push(row);
+    }).on("end", () => {
+        if(prevStock.length===0){
+            prevStock = parsedRaw.map(r => Number(r["STOCK"]));
+        }
+
+        parsed = [];
         for(let i = 0; i < parsedRaw.length; i++){
-            prevStock.push(parsedRaw[i]["STOCK"]);
+            const row = parsedRaw[i];
+            const blegh = {};
+
+            const min = Number(row["MINPRICE"]);
+            const max = Number(row["MAXPRICE"]);
+            const stock = Number(row["STOCK"]);
+
+            if(!price[i]) price[i] = (min+max)/2;
+            if(!init[i]) init[i] = {STOCK:stock};
+
+            const newPrice = calcPrice(price[i], init[i]["STOCK"], prevStock[i], stock);
+
+            blegh["ITEMID"] = row["ITEMID"];
+            blegh["ITEMNAME"] = row["ITEMNAME"];
+            blegh["ITEMDESC"] = row["ITEMDESC"];
+            blegh["PRICE"] = Math.round(newPrice);
+            blegh["STOCK"] = stock;
+
+            parsed.push(blegh);
+            price[i] = newPrice;
         }
-    }
-    for(let i = 0; i < parsedRaw.length; i++){
-        const blegh = {}
-        for (const key in parsedRaw[i]) {
-            console.log(key)
-            console.log(calcPrice(price[i], init[i]["STOCK"], prevStock[i], prevStock[i]))
-            if(key==="MINPRICE"){
-                blegh["PRICE"] = (parsedRaw[i]["MAXPRICE"] - parsedRaw[i]["MINPRICE"]) * calcPrice(price[i], init[i]["STOCK"], prevStock[i], prevStock[i]) + parsedRaw[i]["MINPRICE"];
-                console.log("asd")
-                console.log(calcPrice(price[i], init[i]["STOCK"], prevStock[i], prevStock[i]))
-            }
-            else if(key!=="MAXPRICE"){
-                blegh[key] = parsedRaw[i][key];
-            }
-        }
-        parsed.push(blegh);
-    }
-    for(let i = 0; i < parsedRaw.length; i++){
-        prevStock.push(parsedRaw[i]["STOCK"]);
-    }
+        prevStock = parsedRaw.map(r => Number(r["STOCK"]));
+        console.log("kaboom", parsed)
+    })
 }
 
 loadData();
