@@ -9,13 +9,13 @@ ITEMID,ITEMNAME,ITEMDESC,MINPRICE,MAXPRICE,STOCK
 8,1PASSWORD,1 year 5-person 1Password subscription,25,25,1
 9,RASPPI,Raspberry Pi 4B 4GB RAM,35,35,1
 10,PROCREATE,Procreate,10,15,2
-11,HOMEWORK,A piece of Astra's homework,1,3,40
+11,HOMEWORK,A piece of Astra's homework,1,3,50
 12,SKETCH,A 20-sec sketch from astra,3,7,50
 13,ARDUINOUNO,Arduino Uno SMD CH340,15,15,1
 14,ARDUINONANO,Arduino Nano CH340 USB-C,12,12,1
 15,YUBIKEY,Yubikey 5C or something,17,30,50
 16,STICKERSHEET,Additional (quality) sticker sheets (from Jukebox),5,10,60
-17,MAGNETS,Vinyl printed magnets from Jukebox,8,15,200
+17,MAGNETS,Vinyl printed magnets from Jukebox,8,15,250
 18,MUSICSUBSCR,1mo Apple Music / Spotify Subscription,10,15,5
 19,SHITSTICKERS,a sheet of the low quality stickers,1,10,15
 20,PAPERTROPHY,a paper cup with something written on it idk,2,5,10

@@ -15,20 +15,27 @@ let prevStock = [];
 app.set("view engine", "ejs");
 
 function calcPrice(prevPrice, initStock, prevStock, currentStock) {
-    let demand = prevStock - currentStock;
-    let stockRatio = currentStock - initStock;
+    const demand = prevStock - currentStock;
+    const stockChange = currentStock - prevStock;
 
-    let scarcity = 1+ (1-stockRatio)*0.8;
+    const demandRate = Math.max(-1, Math.min(1, demand / Math.max(1, initStock)));
+    const scarcity = 1 + (1 - currentStock / Math.max(1, initStock)) * 0.5;
+    const demandFactor = 1 + demandRate * 0.3;
 
-    let demandFactor = 1+ (demand/Math.max(1, initStock)) * 2;
     let newPrice = prevPrice * scarcity * demandFactor;
 
-    if (demand <= 0){
-        newPrice *= 0.9;
+    if(demand === 0) newPrice = prevPrice * 0.99;
+
+    const minPrice = prevPrice *0.7;
+    const maxPrice = prevPrice * 1.3;
+
+    if(Math.max(minPrice, Math.min(maxPrice, newPrice))>=0 || Math.max(minPrice, Math.min(maxPrice, newPrice))<=1){
+        return Math.max(minPrice, Math.min(maxPrice, newPrice));
+    }else if(Math.max(minPrice, Math.min(maxPrice, newPrice))<0){
+        return 0.0;
+    }else if(Math.max(minPrice, Math.min(maxPrice, newPrice))>1){
+        return 1.0;
     }
-    let minPrice = prevPrice * 0.5;
-    let maxPrice = prevPrice *3;
-    return Math.max(minPrice, Math.min(maxPrice, newPrice));
 }
 
 function loadData(){
