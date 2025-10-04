@@ -9,6 +9,7 @@ const port = 3069
 let init = [];
 let price = [];
 let parsed = [];
+let parsedRaw = [];
 
 app.set("view engine", "ejs");
 
@@ -39,7 +40,7 @@ function loadData(){
 }
 
 loadData();
-setInterval(loadData, 5000);
+setInterval(loadData, 6000);
 
 
 app.get("/data", (req, res) => {
@@ -51,7 +52,7 @@ app.get("/", (req, res) => {
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    const body = document.querySelector("body");
+    // const body = document.querySelector("body");
     const table = document.querySelector("#table");
 
     const columns = ["ITEMID", "ITEMNAME", "ITEMDESC", "MINPRICE", "MAXPRICE", "STOCK"];
