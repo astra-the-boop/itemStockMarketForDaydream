@@ -10,6 +10,7 @@ let init = [];
 let price = [];
 let parsed = [];
 let parsedRaw = [];
+let prevStock = [];
 
 app.set("view engine", "ejs");
 
@@ -31,15 +32,39 @@ function calcPrice(prevPrice, initStock, prevStock, currentStock) {
 }
 
 function loadData(){
-    parsed = [];
+    parsedRaw = [];
     fs.createReadStream("Untitled Spreadsheet.csv").pipe(csv()).on("data", (row)=>{
         parsed.push(row);
-    }).on("end", () => {
-        // console.log(parsed)
-    });
+    }).on("end", () => {});
+    parsed = [];
+    if(prevStock.length === 0){
+        for(let i = 0; i < parsedRaw.length; i++){
+            prevStock.push(parsedRaw[i]["STOCK"]);
+        }
+    }
+    for(let i = 0; i < parsedRaw.length; i++){
+        const blegh = {}
+        for (const key in parsedRaw[i]) {
+            console.log(key)
+            console.log(calcPrice(price[i], init[i]["STOCK"], prevStock[i], prevStock[i]))
+            if(key==="MINPRICE"){
+                blegh["PRICE"] = (parsedRaw[i]["MAXPRICE"] - parsedRaw[i]["MINPRICE"]) * calcPrice(price[i], init[i]["STOCK"], prevStock[i], prevStock[i]) + parsedRaw[i]["MINPRICE"];
+                console.log("asd")
+                console.log(calcPrice(price[i], init[i]["STOCK"], prevStock[i], prevStock[i]))
+            }
+            else if(key!=="MAXPRICE"){
+                blegh[key] = parsedRaw[i][key];
+            }
+        }
+        parsed.push(blegh);
+    }
+    for(let i = 0; i < parsedRaw.length; i++){
+        prevStock.push(parsedRaw[i]["STOCK"]);
+    }
 }
 
 loadData();
+init = parsedRaw;
 setInterval(loadData, 6000);
 
 
@@ -55,11 +80,12 @@ app.get("/", (req, res) => {
     // const body = document.querySelector("body");
     const table = document.querySelector("#table");
 
-    const columns = ["ITEMID", "ITEMNAME", "ITEMDESC", "MINPRICE", "MAXPRICE", "STOCK"];
+    const columnsx = ["ITEMID", "ITEMNAME", "ITEMDESC", "MINPRICE", "MAXPRICE", "STOCK"];
+    const columns = ["ITEMID", "ITEMNAME", "ITEMDESC", "PRICE", "STOCK"];
 
     // console.log(price);
     if (price.length === 0) {
-        console.log("asdklj")
+        // console.log("asdklj")
         price = [];
         init = [];
         for (let i = 0; i < parsed.length - 1; i++) {
