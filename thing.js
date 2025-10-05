@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 
 function calcPrice(prevPrice, initStock, prevStock, currentStock) {
     const demand = prevStock - currentStock;
-    const stockChange = currentStock - prevStock;
+    // const stockChange = currentStock - prevStock;
 
     const demandRate = Math.max(-1, Math.min(1, demand / Math.max(1, initStock)));
     const scarcity = 1 + (1 - currentStock / Math.max(1, initStock)) * 0.5;
@@ -124,8 +124,16 @@ app.get("/", (req, res) => {
         td.textContent = (parsed[i]["ITEMID"] + " - " + parsed[i]["ITEMNAME"] + " - " + parsed[i]["ITEMDESC"]) || "";
         tr.appendChild(td);
         td = document.createElement("td");
-        td.textContent = (parsed[i]["PRICE"]) || "";
+        const img = document.createElement("img");
+        img.src = "currency.png";
+        img.style.height = "2rem";
+        img.style.verticalAlign = "bottom";
+        td.appendChild(img);
+        const span = document.createElement("span");
+        span.textContent = (parsed[i]["PRICE"]) || "";
+        td.appendChild(span);
         tr.appendChild(td);
+
         td = document.createElement("td");
         td.textContent = (parsed[i]["STOCK"]) || "";
         tr.appendChild(td);
