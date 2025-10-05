@@ -90,15 +90,20 @@ app.get("/", (req, res) => {
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    // const body = document.querySelector("body");
     const table = document.querySelector("#table");
 
-    const columnsx = ["ITEMID", "ITEMNAME", "ITEMDESC", "MINPRICE", "MAXPRICE", "STOCK"];
+    const columnsx = ["Item", "Price", "Stock"];
     const columns = ["ITEMID", "ITEMNAME", "ITEMDESC", "PRICE", "STOCK"];
 
-    // console.log(price);
+    const trx = document.createElement("tr");
+    for (const col of columnsx) {
+        const td = document.createElement("td");
+        td.textContent = col;
+        trx.appendChild(td);
+    }
+    table.appendChild(trx);
+
     if (price.length === 0) {
-        // console.log("asdklj")
         price = [];
         init = [];
         for (let i = 0; i < parsed.length - 1; i++) {
@@ -109,17 +114,19 @@ app.get("/", (req, res) => {
             }
             init.push(x);
         }
-        // console.log(init);
-        // console.log(price);
     }
     for (i = 0; i < parsed.length-1; i++) {
         const tr = document.createElement("tr");
 
-        for (const col of columns) {
-            const td = document.createElement("td");
-            td.textContent = parsed[i][col] || "";
-            tr.appendChild(td);
-        }
+        let td = document.createElement("td");
+        td.textContent = (parsed[i]["ITEMID"] + " - " + parsed[i]["ITEMNAME"] + " - " + parsed[i]["ITEMDESC"]) || "";
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.textContent = (parsed[i]["PRICE"]) || "";
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.textContent = (parsed[i]["STOCK"]) || "";
+        tr.appendChild(td);
         table.appendChild(tr);
     }
 
