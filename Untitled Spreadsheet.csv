@@ -15,7 +15,7 @@ ITEMID,ITEMNAME,ITEMDESC,MINPRICE,MAXPRICE,STOCK
 14,ARDUINONANO,Arduino Nano CH340 USB-C,12,12,1
 15,YUBIKEY,Yubikey 5C or something,17,30,50
 16,STICKERSHEET,Additional (quality) sticker sheets (from Jukebox),5,10,60
-17,MAGNETS,Vinyl printed magnets from Jukebox,8,15,250
+17,MAGNETS,Vinyl printed magnets from Jukebox,8,15,500
 18,MUSICSUBSCR,1mo Apple Music / Spotify Subscription,10,15,5
 19,SHITSTICKERS,a sheet of the low quality stickers,1,10,15
 20,PAPERTROPHY,a paper cup with something written on it idk,2,5,10

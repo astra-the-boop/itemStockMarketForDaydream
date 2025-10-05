@@ -60,11 +60,12 @@ function loadData(){
             if(!init[i]) init[i] = {STOCK:stock};
 
             const newPrice = calcPrice(price[i], init[i]["STOCK"], prevStock[i], stock);
+            const fixedPrice = Math.min(max, Math.max(min, newPrice));
 
             blegh["ITEMID"] = row["ITEMID"];
             blegh["ITEMNAME"] = row["ITEMNAME"];
             blegh["ITEMDESC"] = row["ITEMDESC"];
-            blegh["PRICE"] = Math.round(newPrice);
+            blegh["PRICE"] = Math.round(fixedPrice);
             blegh["STOCK"] = stock;
 
             parsed.push(blegh);
