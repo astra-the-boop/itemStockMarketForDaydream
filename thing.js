@@ -97,9 +97,11 @@ app.get("/", (req, res) => {
 
     const trx = document.createElement("tr");
     for (const col of columnsx) {
-        const td = document.createElement("td");
-        td.textContent = col;
-        trx.appendChild(td);
+        const th = document.createElement("th");
+        const h3 = document.createElement("h3");
+        h3.textContent = col;
+        th.appendChild(h3);
+        trx.appendChild(th);
     }
     table.appendChild(trx);
 
