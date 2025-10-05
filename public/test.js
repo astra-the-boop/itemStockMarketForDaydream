@@ -1,20 +1,29 @@
 const ctx = document.getElementById('myChart');
 
+const labels = ["dsaf", "59", "80", "56", "40"];
+const data = {
+    labels: labels,
+    datasets: [
+        {
+            label: "money",
+            data: [65, 59, 80, 56, 40],
+            fill: true,
+            backgroundColor: "rgb(75, 192, 192, 0.5)",
+            borderColor: "rgb(75, 192, 192)",
+            borderWidth: 3,
+            tension: 0,
+        }
+    ]
+};
 new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+    type: 'line',
+    data: data,
+    options:{
+        plugins:{
+            legend:{
+                display:false
             }
         }
     }
 });
+
