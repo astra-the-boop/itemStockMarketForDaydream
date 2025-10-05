@@ -92,7 +92,7 @@ app.get("/", (req, res) => {
 
     const table = document.querySelector("#table");
 
-    const columnsx = ["Item", "Price", "Stock"];
+    const columnsx = ["Item", "Price", "", "Stock"];
     const columns = ["ITEMID", "ITEMNAME", "ITEMDESC", "PRICE", "STOCK"];
 
     const trx = document.createElement("tr");
