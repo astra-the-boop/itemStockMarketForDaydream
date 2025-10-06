@@ -133,6 +133,11 @@ app.get("/", (req, res) => {
         span.textContent = (parsed[i]["PRICE"]) || "";
         td.appendChild(span);
         tr.appendChild(td);
+        td = document.createElement("td");
+        const canvas = document.createElement("canvas");
+        canvas.id = "chart"+parsed[i]["ITEMID"];
+        td.appendChild(canvas);
+        tr.appendChild(td);
 
         td = document.createElement("td");
         td.textContent = (parsed[i]["STOCK"]) || "";

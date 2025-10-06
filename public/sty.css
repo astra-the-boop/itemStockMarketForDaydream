@@ -51,7 +51,7 @@ table, div{
 
 
 #tableContainer{
-    width: 60%;
+    width: 80%;
     padding: 2rem;
     border-radius: 1rem;
     background: linear-gradient(166deg,rgba(56, 56, 56, 1) 0%, rgba(38, 38, 38, 1) 100%);
@@ -60,4 +60,8 @@ h3{
     color: #afafaf;
     margin-bottom: 0.75rem;
     margin-top: 0;
+}
+canvas{
+    height: 4rem;
+    width: 20rem
 }
