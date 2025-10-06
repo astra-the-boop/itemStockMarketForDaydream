@@ -1,15 +1,15 @@
 const ctx = document.getElementById('myChart');
-
-const labels = ["dsaf", "59", "80", "56", "40"];
+Chart.defaults.color = "#fff";
+const labels = ["","","","",""];
 const data = {
     labels: labels,
     datasets: [
         {
-            label: "money",
+            label: "",
             data: [65, 59, 80, 56, 40],
             fill: true,
-            backgroundColor: "rgb(75, 192, 192, 0.5)",
-            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgb(200, 0, 0, 0.5)",
+            borderColor: "rgb(200, 0, 0)",
             borderWidth: 3,
             tension: 0,
         }
