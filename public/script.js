@@ -25,7 +25,7 @@ function renderTable(items){
         tr.appendChild(td);
 
         td = document.createElement("td");
-        td.innerHTML = `<img src="currency.png" id="currency"> ${i.PRICE}`
+        td.innerHTML = `<img src="currency.png" id="currency"> <span id="price${i.ITEMID}">${i.PRICE}</span>`
         tr.appendChild(td);
 
         td = document.createElement("td");
@@ -47,6 +47,9 @@ function updateCharts(items){
         const chartID = `chart${id}`;
         const ctx = document.getElementById(chartID);
 
+        const span = document.getElementById(`price${i.ITEMID}`);
+        if(span) span.textContent = i.PRICE;
+
         if(ctx){
             if(!charts[id]){
                 charts[id] = new Chart(ctx,{
@@ -67,7 +70,7 @@ function updateCharts(items){
                         animation: false,
                         plugins: {legend:{display: false}},
                         scales:{
-                            y:{beginAtZero:true},
+                            y:{beginAtZero:false},
                         }
                     }
                 });
