@@ -34,6 +34,8 @@ function renderTable(items){
         canvas.style.height = "3rem";
         canvas.style.marginBottom = "0";
         td.style.paddingBottom = "0";
+        td.style.width = "15rem";
+        canvas.style.width = "15rem";
         td.appendChild(canvas);
         tr.appendChild(td);
 
