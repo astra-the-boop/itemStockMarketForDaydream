@@ -148,6 +148,8 @@ app.get("/", (req, res) => {
     res.send(dom.serialize());
 })
 
+
+
 app.use(express.static("./public"));
 
 app.listen(port, () => {
