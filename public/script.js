@@ -31,6 +31,9 @@ function renderTable(items){
         td = document.createElement("td");
         const canvas = document.createElement("canvas");
         canvas.id = `chart${i.ITEMID}`;
+        canvas.style.height = "3rem";
+        canvas.style.marginBottom = "0";
+        td.style.paddingBottom = "0";
         td.appendChild(canvas);
         tr.appendChild(td);
 
@@ -67,10 +70,34 @@ function updateCharts(items){
 
                     },
                     options: {
+                        layout:{
+                            padding: {
+                                top:0,
+                                bottom:0,
+                                left:0,
+                                right:0
+                            },
+
+                        },
                         animation: false,
-                        plugins: {legend:{display: false}},
+                        plugins: {
+                            legend:{display: false},
+                            tooltip: {enabled:false}
+                        },
                         scales:{
-                            y:{beginAtZero:false},
+                            x:{
+                                display: false,
+                                grid:{display: false, drawBorder: false},
+                            },
+                            y:{
+                                beginAtZero:false,
+                                display: false,
+                                grid:{display: false, drawBorder: false},
+                                ticks: {
+                                    display: false
+                                },
+                                padding: 0
+                            },
                         }
                     }
                 });
