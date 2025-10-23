@@ -17,23 +17,34 @@ app.set("view engine", "ejs");
 function calcPrice(prevPrice, initStock, prevStock, currentStock) {
     const demand = prevStock - currentStock;
     // const stockChange = currentStock - prevStock;
+    let newPrice = prevPrice;
 
-    const demandRate = Math.max(-1, Math.min(1, demand / Math.max(1, initStock)));
-    const scarcity = 1 + (1 - currentStock / Math.max(1, initStock)) * 0.5;
-    const demandFactor = 1 + demandRate * 0.3;
-
-    let newPrice = prevPrice * scarcity * demandFactor;
+    if(demand > 0.2*(currentStock)){
+        newPrice *= 1.2;
+        if(demand > 0.5*(currentStock)){
+            newPrice *= 1.8;
+            if(demand > 0.75*(currentStock)){
+                newPrice *= 2;
+            }
+        }
+    }else if(demand <= 0.1*(currentStock)){
+        newPrice *= 0.9;
+        if(demand <= 0){
+            newPrice *= 0.7;
+            if(demand <= -0.5*(currentStock)){
+                newPrice *= 0.4;
+            }
+        }
+    }
 
     if(demand === 0) newPrice = prevPrice * 0.99;
 
-    const minPrice = prevPrice *0.7;
-    const maxPrice = prevPrice * 1.3;
 
-    if(Math.max(minPrice, Math.min(maxPrice, newPrice))>=0 || Math.max(minPrice, Math.min(maxPrice, newPrice))<=1){
-        return Math.max(minPrice, Math.min(maxPrice, newPrice));
-    }else if(Math.max(minPrice, Math.min(maxPrice, newPrice))<0){
+    if(newPrice>=0 || newPrice<=1){
+        return newPrice;
+    }else if(newPrice<0){
         return 0.0;
-    }else if(Math.max(minPrice, Math.min(maxPrice, newPrice))>1){
+    }else if(newPrice>1){
         return 1.0;
     }
 }
