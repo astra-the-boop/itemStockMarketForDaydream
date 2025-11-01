@@ -2,7 +2,9 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const express = require("express");
 const {JSDOM} = require("jsdom");
+const dotenv = require("dotenv");
 const app = express();
+dotenv.config();
 
 const port = 3069
 
@@ -13,6 +15,8 @@ let parsedRaw = [];
 let prevStock = [];
 
 app.set("view engine", "ejs");
+
+const nameOfTheFUckingSpreadsheetSHITTTIOVERSLEPTGOTTALOCKINFORATHENAKLFSDAJAGSDKLJADSKGJ = process.env.SPREADSHEET;
 
 function calcPrice(prevPrice, initStock, prevStock, currentStock) {
     const demand = prevStock - currentStock;
@@ -51,7 +55,7 @@ function calcPrice(prevPrice, initStock, prevStock, currentStock) {
 
 function loadData(){
     parsedRaw = [];
-    fs.createReadStream("Untitled Spreadsheet.csv").pipe(csv()).on("data", (row) => {
+    fs.createReadStream(`${nameOfTheFUckingSpreadsheetSHITTTIOVERSLEPTGOTTALOCKINFORATHENAKLFSDAJAGSDKLJADSKGJ}.csv`).pipe(csv()).on("data", (row) => {
         parsedRaw.push(row);
     }).on("end", () => {
         if(prevStock.length===0){
