@@ -40,7 +40,7 @@ function renderTable(items){
         tr.appendChild(td);
 
         td = document.createElement("td");
-        td.textContent = i.STOCK;
+        td.innerHTML = `<span id="stock${i.ITEMID}">${i.STOCK}</span>`;
         tr.appendChild(td);
         table.appendChild(tr);
     }
@@ -54,6 +54,9 @@ function updateCharts(items){
 
         const span = document.getElementById(`price${i.ITEMID}`);
         if(span) span.textContent = i.PRICE;
+
+        const sSpan = document.getElementById(`stock${i.ITEMID}`);
+        if(sSpan) sSpan.textContent = i.STOCK;
 
         if(ctx){
             if(!charts[id]){
@@ -128,6 +131,31 @@ async function refresh(){
     }
     updateCharts(data);
 }
+
+let scrollDir = 1;
+
+function scroll(){
+    const scrollSpeed = 9;
+    const scrollDelay = 30;
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    const currentScroll = window.scrollY;
+
+    if(currentScroll >= maxScroll){scrollDir = -1;}
+    else if (currentScroll <= 0) scrollDir = 1;
+
+    // Scroll smoothly
+    window.scrollBy({
+        top: scrollSpeed * scrollDir,
+        behavior: "smooth"
+    });
+
+    setTimeout(scroll, scrollDelay);
+}
+
+scroll();
+
+
+
 
 refresh();
 setInterval(refresh, 6000);
